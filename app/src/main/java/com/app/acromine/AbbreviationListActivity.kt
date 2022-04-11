@@ -31,7 +31,7 @@ class AbbreviationListActivity : AppCompatActivity() {
         val retrofitService = RetrofitService.getInstance()
         val abbreviationRepository = AbbreviationRepository(retrofitService)
         binding.recyclerview.adapter = adapter
-        abbreviationListViewModel = ViewModelProvider(this, ViewModelFactory(abbreviationRepository)).get(AbbreviationListViewModel::class.java)
+        abbreviationListViewModel = ViewModelProvider(this, ViewModelFactory(this,abbreviationRepository)).get(AbbreviationListViewModel::class.java)
         binding.abbreviationListViewModel = abbreviationListViewModel
         binding.lifecycleOwner = this
 
@@ -51,11 +51,6 @@ class AbbreviationListActivity : AppCompatActivity() {
                 binding.progressDialog.visibility = View.GONE
             }
         })
-
-
-        abbreviationListViewModel.getAllAbbreviationData(this,intent.getStringExtra("AbbreviationTxt")!!,
-            intent.getStringExtra("FullFormsTxt")!!)
-
 
         adapter.onItemClick = { lfs ->
             val intent = Intent(this, VarsListActivity::class.java)

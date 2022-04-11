@@ -59,7 +59,7 @@ class Utils {
            builder.setTitle("Error")
            builder.setMessage(text)
            builder.setIcon(android.R.drawable.ic_dialog_alert)
-           builder.setPositiveButton("OK"){dialogInterface, which -> activity.finish() }
+           builder.setPositiveButton("OK"){dialogInterface, which -> dialogInterface.dismiss() }
            val alertDialog: AlertDialog = builder.create()
            alertDialog.setCancelable(false)
            alertDialog.show()

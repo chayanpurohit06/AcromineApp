@@ -1,7 +1,9 @@
 package com.app.acromine.viewmodel
 
+import android.content.Context
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
+import androidx.test.InstrumentationRegistry
 import com.app.acromine.model.AbbreviationModel
 import com.app.acromine.repository.AbbreviationRepository
 
@@ -38,11 +40,15 @@ class AbbreviationListViewModelTest : TestCase() {
 
     lateinit var viewModel : AbbreviationListViewModel
 
+    lateinit var instrumentationContext :Context
+
+
 
     @Before
     public override fun setUp() {
         MockitoAnnotations.initMocks(this)
-        viewModel = AbbreviationListViewModel(apiRepo)
+        instrumentationContext = InstrumentationRegistry.getInstrumentation().context
+        viewModel = AbbreviationListViewModel(instrumentationContext,apiRepo)
 
     }
 
