@@ -1,6 +1,9 @@
 package com.app.acromine.viewmodel
 
+import android.app.Activity
 import android.content.Context
+import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -8,6 +11,7 @@ import androidx.lifecycle.ViewModel
 import com.app.acromine.model.AbbreviationModel
 import kotlinx.coroutines.*
 import com.app.acromine.Util.Utils
+import com.app.acromine.model.Lfs
 import com.app.acromine.repository.AbbreviationRepository
 
 class AbbreviationListViewModel constructor(private val context: Context,private val abbreviationRepo: AbbreviationRepository) :
@@ -26,10 +30,12 @@ class AbbreviationListViewModel constructor(private val context: Context,private
 
     val loading = MutableLiveData<Boolean>()
 
+    val isToastVisible = MutableLiveData<Boolean>(false)
+
     fun onTextChanged(s:CharSequence,start:Int,before:Int,count:Int){
-       
+
         loading.postValue(false)
-       
+
         if (Utils.isNetworkAvailable(context)) {
 
             if (!Utils.isSfsOrIfsNullorBlank(s.toString()))
@@ -70,15 +76,20 @@ class AbbreviationListViewModel constructor(private val context: Context,private
 
                             loading.value = false
 
+                            isToastVisible.value = false
+
                         } else {
+                            abbreviationList.postValue(mutableListOf<AbbreviationModel>())
                             onError("Data not Available,Please try again with other input.")
                         }
                     } else {
+
                         onError("${response.message()} ")
                     }
                 }
             }
         } else {
+
             onError("Network connection is not available.Please try again after some time.")
         }
 
@@ -88,10 +99,17 @@ class AbbreviationListViewModel constructor(private val context: Context,private
         return abbreviationList
     }
 
+
+
     private fun onError(message: String) {
-        errorMessage.value = message
         loading.value = false
+        if(isToastVisible.value == false){
+            errorMessage.value = message
+            isToastVisible.value = true
+        }
     }
+
+
 
     override fun onCleared() {
         super.onCleared()

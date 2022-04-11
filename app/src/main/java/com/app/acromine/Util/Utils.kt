@@ -6,6 +6,9 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.util.Log
+import android.view.View
+import android.view.inputmethod.InputMethodManager
+import com.app.acromine.viewmodel.AbbreviationListViewModel
 import java.util.regex.Pattern
 
 class Utils {
@@ -52,19 +55,15 @@ class Utils {
             return false
         }
 
+        fun hideSoftKeyBoard(context: Context, view: View) {
+            try {
+                val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                imm?.hideSoftInputFromWindow(view.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
 
-       fun showDialog(activity:Activity,text : String){
-
-           val builder = AlertDialog.Builder(activity)
-           builder.setTitle("Error")
-           builder.setMessage(text)
-           builder.setIcon(android.R.drawable.ic_dialog_alert)
-           builder.setPositiveButton("OK"){dialogInterface, which -> dialogInterface.dismiss() }
-           val alertDialog: AlertDialog = builder.create()
-           alertDialog.setCancelable(false)
-           alertDialog.show()
-       }
-
+        }
 
     }
 
