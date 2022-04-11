@@ -40,7 +40,7 @@ class AbbreviationListViewModel constructor(private val context: Context,private
                 }
 
             } else {
-                Toast.makeText(context, "Please enter Abbreviation or Full Forms to Proceed", Toast.LENGTH_LONG).show()
+                Toast.makeText(context, "Please enter Abbreviation to Proceed", Toast.LENGTH_LONG).show()
             }
         } else {
             Toast.makeText(context, "Network connection is not available.", Toast.LENGTH_LONG).show()
