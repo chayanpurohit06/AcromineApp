@@ -38,11 +38,11 @@ class AbbreviationListViewModel constructor(private val context: Context,private
 
         if (Utils.isNetworkAvailable(context)) {
 
-            if (!Utils.isSfsOrIfsNullorBlank(s.toString()))
+            if (!Utils.isSfsOrIfsNullorBlank(s.toString().trim()))
             {
-                if(s.toString().length >=3){
+                if(s.toString().trim().length >=3){
 
-                    getAllAbbreviationData(context,s.toString(),"")
+                    getAllAbbreviationData(context,s.toString().trim(),"")
                 }
 
             } else {
